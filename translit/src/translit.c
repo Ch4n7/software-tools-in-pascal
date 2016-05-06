@@ -8,6 +8,7 @@
 #define NO_MATCHED -1	
 #define ALLBUT ('^')
 #define	EOS ('\0')	// end of string
+#define ESCAPE ('@')
 
 int c7_index(char ch, char *charset);
 int xindex(char ch, char *charset, bool allbut, int lastto);
@@ -125,7 +126,34 @@ makeset(char *argstr, char *outset, int setsize, bool *allbut)
 		i++;
 	}
 	while (argstr[i] != EOS && i < (setsize - 1) && j < (setsize - 1)) {
-		if (argstr[i+1] == '-' && islower(argstr[i]) && islower(argstr[i+2])) {
+		if (argstr[i] == ESCAPE) {
+			switch (argstr[i+1]) {
+				case 'b':	// '@b' means BLANK
+					outset[j] = ' ';
+					i += 2;
+					j++;
+					break;
+				case 'n':	// '@n' means NEWLINE 
+					outset[j] = '\n';
+					i += 2;
+					j++;
+					break;
+				case 't':	// '@t' means TAB
+					outset[j] = '\t';
+					i += 2;
+					j++;
+					break;
+				case ALLBUT:	// '@^' means '^' literately
+					outset[j] = '^';
+					i += 2;
+					j++;
+					break;
+				default:	// otherwise, '@' means just '@'
+					outset[j] = ESCAPE;
+					i++;
+					j++;
+			}
+		} else if (argstr[i+1] == '-' && islower(argstr[i]) && islower(argstr[i+2])) {
 			j = expandash(argstr[i], argstr[i+2], outset, j);		
 			i += 3;
 		} else if (argstr[i+1] == '-' && isupper(argstr[i]) && isupper(argstr[i+2])) {

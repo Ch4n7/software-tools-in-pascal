@@ -4,7 +4,7 @@
 
 ## USAGE
 
-*translit* [^]fromset [toset]
+	*translit* [^]fromset [toset]
 
 ## FUNCTION
 
@@ -18,16 +18,30 @@
 
 * Specially, if *toset* is absent, all characters represented by *fromset* will be deleted.
 
-* Finally, if *fromset* is preceded by a '^', all but the characters represented by the *fromset* are taken as the from-set characters
+* If *fromset* is preceded by a '^', all but the characters represented by the *fromset* are taken as the from-set characters
+
+* For those characters which are hard to pass through the command arguments, use escape characters to represent:
+
+	- @b -> BLANK
+	- @n -> NEWLINE
+	- @t -> TAB
+	- @^ -> strip '^' off the meaning of allbut
+	- otherwise, '@' just a '@'
 
 ## EXAMPLE
 
 To convert lower case to upper:
+
 	translit a-z A-Z
 
 To reserve only digits:
+
 	translit ^0-9
 
 To produce a Caesar Cipher:
+
 	translit a-z b-za
 
+To convert run of blanks into single occurence:
+
+	translit @b@b @b
