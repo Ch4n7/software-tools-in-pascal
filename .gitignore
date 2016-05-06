@@ -1,0 +1,17 @@
+tags
+core
+
+# compiled files
+*.gch
+*.[ao]
+*.out
+
+# some binary files in their 'bin' folder
+bin/
+
+# test files
+foo*
+test/
+
+# vi files
+*.swp

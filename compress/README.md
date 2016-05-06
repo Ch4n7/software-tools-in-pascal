@@ -1,0 +1,15 @@
+## PROGRAM
+
+*compress*	compress input by encoding repeated characters
+
+## USAGE
+
+*compress*
+
+## FUNCTION
+
+*compress* copies its input to its output, replacing strings of 4 or more identical characters by a code sequence so that the output generally contains fewer characters than the input. A run of x's is encoded as ~nx, where the count 'n' is a character: 'A' calls for a repetition of one x's, 'B' of two x's, 'C' of three x's, and so on. Runs longer than 26 are broken into several shorter ones. Runs of x's of any length are encoded.
+
+## BUGS
+
+The program is assumed that the 26 characters are contiguous and beginning with 'A'.
