@@ -10,7 +10,7 @@ core
 bin/
 
 # test files
-foo*
+*foo*
 test/
 
 # vi files

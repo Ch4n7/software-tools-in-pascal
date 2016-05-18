@@ -17,13 +17,18 @@ main(int argc, char *argv[])
 {
 	int	i;
 	FILE	*fp;
+	char	emptystr[] = "";
 
-	for (i = 1; i < argc; i++) {
-		if ((fp = fopen(argv[i], "r")) == NULL)
-			err_msg("%s: can't open file '%s'", argv[0], argv[i]);
-		else {
-			fprint(argv[i], fp, stdout);
-			fclose(fp);
+	if (argc == 1) {	// reverts input to output if no filename arguments specified
+		fprint(emptystr, stdin, stdout);	
+	} else {
+		for (i = 1; i < argc; i++) {
+			if ((fp = fopen(argv[i], "r")) == NULL)
+				err_msg("%s: can't open file '%s'", argv[0], argv[i]);
+			else {
+				fprint(argv[i], fp, stdout);
+				fclose(fp);
+			}
 		}
 	}
 
@@ -36,11 +41,11 @@ fprint(char *filename, FILE *fpin, FILE *fpout)
 	char	line[MAXLINE];
 	int	lineno, pageno;
 
-	pageno = 1;
 	skip(MARGIN1, fpout);
 	head(filename, pageno, fpout);
 	skip(MARGIN2, fpout);
 	lineno = 1 + MARGIN1 + 1 + MARGIN2; // line number starts from 1, anthor 1 is for header information
+	pageno = 1;
 	while (fgets(line, MAXLINE, fpin) != NULL) {
 		if (lineno == 1) {
 			pageno++;
